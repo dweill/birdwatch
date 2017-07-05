@@ -7,7 +7,7 @@ class ProfileMap extends Component {
   }
   render() {
     return (
-      <div>Honey Im Comb</div>
+      <div>Map component</div>
     );
   }
 }

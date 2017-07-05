@@ -68,6 +68,7 @@ class Login extends Component {
                 onClick={event => this.handleClick(event)}
               />
               <br />
+              <br />
               <FlatButton
                 label="SignUp"
                 containerElement={<Link to="/signup" />}
