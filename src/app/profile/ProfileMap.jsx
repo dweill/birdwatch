@@ -33,7 +33,7 @@ class ProfileMap extends Component {
       initialCenter={{ lat: 29.95106579999999, lng: -90.0715323 }}
       >
       {this.state.coords.map((coord, i) => {
-        console.log(coord ,'i am the message for you');
+        console.log(coord, 'i am the message for you');
         return (
             <Marker
               key={i}
