@@ -28,21 +28,21 @@ class ProfileMap extends Component {
   render() {
     return (
       <div className="profileMap">
-      <Map
-      google={this.props.google}
-      initialCenter={{ lat: 29.95106579999999, lng: -90.0715323 }}
-      >
+        <Map
+          google={this.props.google}
+          initialCenter={{ lat: 29.95106579999999, lng: -90.0715323 }}
+        >
       {this.state.coords.map((coord, i) => {
         console.log(coord, 'i am the message for you');
         return (
-            <Marker
-              key={i}
-              icon={BirdLogo}
-              position={{ lat: coord.lat, lng: coord.lng }}
-            />
-          );
+          <Marker
+            key={i}
+            icon={BirdLogo}
+            position={{ lat: coord.lat, lng: coord.lng }}
+          />
+        );
       })}
-      </Map>
+        </Map>
       </div>
     );
   }
