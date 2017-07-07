@@ -2,20 +2,30 @@
 
 import React from 'react';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
-import Login from './login/Login.jsx';
-import SignUp from './login/SignUp.jsx';
-import MapContainer from './map/MapContainer.jsx';
-import TimeLine from './timeline/Timeline.jsx';
-import SplashPage from './login/SplashPage.jsx';
-import CommentPage from './timeline/Comment.jsx';
-import NotFound from './NotFound.jsx';
-import Profile from './profile/Profile.jsx';
+import Login from './login/Login';
+import SignUp from './login/SignUp';
+import MapContainer from './map/MapContainer';
+import TimeLine from './timeline/Timeline';
+import SplashPage from './login/SplashPage';
+import CommentPage from './timeline/Comment';
+import NotFound from './NotFound';
+import Profile from './profile/Profile';
 import './App.scss';
 
 const App = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={SplashPage} />
+      <Route
+        exact
+        path="/"
+        render={() => (
+        localStorage.getItem('watcherToken') !== null ? (
+          <Redirect to="/timeline" />
+        ) : (
+          <SplashPage />
+        )
+      )}
+      />
       <Route
         path="/map"
         render={() => (
@@ -26,8 +36,26 @@ const App = () => (
         )
       )}
       />
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={SignUp} />
+      <Route
+        path="/login"
+        render={() => (
+        localStorage.getItem('watcherToken') !== null ? (
+          <Redirect to="/timeline" />
+        ) : (
+          <Login />
+        )
+      )}
+      />
+      <Route
+        path="/signup"
+        render={() => (
+        localStorage.getItem('watcherToken') !== null ? (
+          <Redirect to="/timeline" />
+        ) : (
+          <SignUp />
+        )
+      )}
+      />
       <Route
         path="/timeline"
         render={() => (

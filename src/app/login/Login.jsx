@@ -1,3 +1,5 @@
+/* global localStorage */
+
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
@@ -22,6 +24,7 @@ class Login extends Component {
       password: '',
     };
   }
+
   handleClick() {
     const loginObj = {
       username: this.state.username,
@@ -32,20 +35,14 @@ class Login extends Component {
       if (response.status === 200) {
         console.log('login successful');
         localStorage.setItem('watcherToken', cryptiles.randomString(100));
-        this.props.history.push('/timeline');
+        window.location.href = '/timeline';
       } else if (response.status === 204) {
-        this.props.history.push('/login');
+        window.location.href = '/login';
       }
     })
     .catch((error) => {
-      console.log(error, 'Error');
+      console.log(error);
     });
-  }
-  snackClick() {
-    this.setState({ open: true });
-  }
-  snackRequestClose() {
-    this.setState({ open: false });
   }
   render() {
     return (
