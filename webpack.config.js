@@ -14,7 +14,7 @@ const config = {
     extensions: ['.js', '.jsx', '.json', '.scss', '.css', '.jpeg', '.jpg', '.gif', '.png'], // Automatically resolve certain extensions
     alias: { // Create aliases
       images: path.resolve(__dirname, 'src/assets/images')  // src/assets/images alias
-    }
+    },
   },
   module: {
     rules: [

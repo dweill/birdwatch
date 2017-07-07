@@ -8,8 +8,11 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 const path = require('path');
 
+
 const PORT = process.env.PORT;
 const app = express();
+
+// require('./src-server/multerImpl')(app);
 
 app.use((req, res, next) => {
   console.log(`serving ${req.method} request for uri: ${req.url}`);
@@ -21,12 +24,13 @@ app.use((req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`Listening at ${PORT}`);
+  // console.log(`Visit http://localhost:3000/example/ to check out the upload example`);
 });
 
 app.use(express.static('public'));
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use(session({
   secret: 'it\'s a secret man',
   resave: false,
@@ -34,9 +38,9 @@ app.use(session({
 
 
 app.post('/login', (req, res) => {
-  console.log(req.session)
+  console.log(req.session);
   db.getUser(req.body.username)
-  .then(data => {
+  .then((data) => {
     if (data.length) {
       let salt = data[0].salt;
       let servPassHash = data[0].password;
@@ -67,7 +71,7 @@ app.post('/signup', (req, res) => {
       const salt = bcrypt.genSaltSync(10);
       const hashedPass = bcrypt.hashSync(req.body.password, salt);
       db.createUser(req.body.username, hashedPass, salt)
-      .then(data => {
+      .then((data) => {
         req.session.regenerate(() => {
           req.session.user = req.body.username;
           res.writeHead(200);
@@ -93,14 +97,16 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/birds', (req, res) => {
-  let user = req.session.user;
+  const user = req.session.user;
+  console.log(user, 'this is user');
   console.log('this is user session', req.session);
   db.getUser(user)
-  .then(data => {
+  .then((data) => {
     console.log('this is data', data);
-    let id = data[0].id;
-    db.createBird(req.body.birdType, req.body.location, id)
-    .then(data => {
+    const id = data[0].id;
+    db.createBird(req.body.birdType, req.body.location, id, req.body.image)
+    .then((d) => {
+      console.log(d, 'dizzlefrizzle');
       res.writeHead(200);
       res.write('bird added!');
       res.end();
@@ -123,19 +129,20 @@ app.post('/map', (req, res) => {
 // get users most recent birds logged in db
 app.get('/birds', (req, res) => {
   db.getBirdsInDb(20)
-  .then(data => {
+  .then((data) => {
     res.writeHead(200);
     res.write(JSON.stringify(data));
     res.end();
   });
 });
 
+
 app.get('/profile', (req, res) => {
   db.getUser(req.session.user)
-  .then(data => {
-    let id = data[0].id;
+  .then((data) => {
+    const id = data[0].id;
     db.getBirdsByUser(id)
-    .then(data => {
+    .then((data) => {
       res.writeHead(200);
       res.write(JSON.stringify(data));
       res.end();

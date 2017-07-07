@@ -8,6 +8,8 @@ import Header from '../Header.jsx';
 import ScrollToTop from 'react-scroll-up';
 import LocationOn from 'material-ui/svg-icons/navigation/arrow-upward';
 import { grey50 } from 'material-ui/styles/colors';
+import Dropzone from 'react-dropzone';
+
 
 const upIcon = <LocationOn color={grey50} />;
 
@@ -43,6 +45,7 @@ class Timeline extends Component {
                   created={birdPost.created}
                   username={birdPost.username}
                   key={birdPost.id}
+                  image={birdPost.image}
                 />
               ))}
             </div>
@@ -57,7 +60,7 @@ class Timeline extends Component {
                 transitionTimingFunction: 'linear',
                 transitionDelay: '0s' }}
             >
-            <span>{upIcon}</span>
+              <span>{upIcon}</span>
             </ScrollToTop>
             <Footer loadFeed={this.loadFeed} />
           </div>
