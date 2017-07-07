@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Card, CardHeader, CardTitle } from 'material-ui/Card';
 import Moment from 'moment-timezone';
 
-
 const ProfilePost = ({ bird, location, created }) => (
   <Card>
     <CardTitle title={`Birdtype: ${bird}`} />

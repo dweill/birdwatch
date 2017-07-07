@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import cryptiles from 'cryptiles';
 import logo from '../../assets/images/bwlogo.png';
 
 const style = {
@@ -31,9 +32,10 @@ class SignUp extends Component {
     .then((response) => {
       if (response.status === 200) {
         console.log('sign up successful');
-        this.props.history.push('/timeline');
+        localStorage.setItem('watcherToken', cryptiles.randomString(100));
+        window.location.href = '/timeline';
       } else if (response.status === 204) {
-        this.props.history.push('/signup');
+        window.location.href = '/signup';
       }
     })
     .catch((error) => {

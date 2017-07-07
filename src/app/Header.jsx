@@ -14,7 +14,15 @@ class Header extends Component {
     this.logsOut = this.logsOut.bind(this);
   }
   logsOut() {
-    axios.post('/logout', { logmeout: true });
+    axios.post('/logout', { logmeout: true })
+    .then((response) => {
+      if (response.status === 200) {
+        localStorage.removeItem('watcherToken');
+      }
+    })
+    .catch((error) => {
+      console.log(error, 'Error');
+    });
   }
   render() {
     return (

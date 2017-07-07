@@ -36,7 +36,11 @@ class Profile extends Component {
               <Header />
               <h1>My Bird List</h1> <img src={image} alt="logo" />
               <div>
-                <ProfileMap />
+                {this.state.profileData && <ProfileMap
+                google={window.google}
+                latLng={{ lat: 29.95106579999999, lng: -90.0715323 }}
+                profileData={this.state.profileData}
+                />}
               </div>
               <div className="Profile">
                 {this.state.profileData && this.state.profileData.map(post => (

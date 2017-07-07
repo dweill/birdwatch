@@ -1,10 +1,14 @@
+/* global localStorage */
+
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import Snackbar from 'material-ui/Snackbar';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import cryptiles from 'cryptiles';
 import logo from '../../assets/images/bwlogo.png';
 
 const style = {
@@ -20,6 +24,7 @@ class Login extends Component {
       password: '',
     };
   }
+
   handleClick() {
     const loginObj = {
       username: this.state.username,
@@ -29,13 +34,14 @@ class Login extends Component {
     .then((response) => {
       if (response.status === 200) {
         console.log('login successful');
-        this.props.history.push('/timeline');
+        localStorage.setItem('watcherToken', cryptiles.randomString(100));
+        window.location.href = '/timeline';
       } else if (response.status === 204) {
-        this.props.history.push('/login');
+        window.location.href = '/login';
       }
     })
     .catch((error) => {
-      console.log(error, 'Error');
+      console.log(error);
     });
   }
   render() {
